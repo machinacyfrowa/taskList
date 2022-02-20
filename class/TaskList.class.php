@@ -94,6 +94,7 @@ class TaskList
                 $buffer .= "w toku";
             } else {
                 //sprawa rozwiązana
+                $buffer .= "Zamknięte ";
                 $buffer .= $taskArray['resolved'];
             }
             $buffer .= "</td>";
@@ -115,5 +116,10 @@ class TaskList
         }
         //jeśli doszliśmy tu to nie znaleziono zgodnego kodu - zwróć pusty
         return NULL;
+    }
+    function closeByCode(string $code) {
+        foreach ($this->taskList as $task) {
+            $task->close($code);
+        }
     }
 }

@@ -17,9 +17,28 @@ session_start();
     {
         $task = $_SESSION['tl']->getByCode($_REQUEST['code']);
 
+        if(isset($_REQUEST['action']))
+            if($_REQUEST['action'] == "close") 
+            {
+                $_SESSION['tl']->closeByCode($_REQUEST['code']);
+                header('Location: tasklist.php');
+            }
+                
+
         echo "Kod zadania: ".$task['code']."<br>";
         echo "Tytuł zadania: ".$task['title']."<br>";
+        echo "Treść zadania: ".$task['content']."<br>";
+        if($task['resolvedTimestamp'] == 0) {
+            echo "Status zadania: w toku<br>";
+        } else {
+
+            echo "Zadanie zakońćzono: ".$task['resolved']."<br>";
+        }
         //TODO: pobrać i wyświetlić pozostałe pola zadania
+        echo '<a href="task.php?'
+            ."code=".$task['code']
+            ."&action=close"
+            .'">Zamknij zadanie</a><br>';
     }
 
     ?>
