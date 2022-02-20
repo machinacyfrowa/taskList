@@ -26,6 +26,7 @@ if(!isset($_SESSION['tl']))
     <?php
     echo $tl->getHTMLTable();
     ?>
+    <a href="new.php">Dodaj nowe zadanie</a>
 </body>
 
 </html>

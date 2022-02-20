@@ -41,8 +41,9 @@ session_start();
             </select>
             <input type="submit" value="Dodaj zadanie">
         </form>
+        
     </div>
-
+    <a href="taskList.php">Wróć do listy zadań</a>
 </body>
 
 </html>

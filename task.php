@@ -23,5 +23,6 @@ session_start();
     }
 
     ?>
+    <a href="taskList.php">Wróć do listy zadań</a>
 </body>
 </html>
