@@ -12,15 +12,6 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-    <style>
-        table {
-            border-collapse: collapse;
-        }
-        td {
-            border: 1px solid black;
-            padding: 5px;
-        }
-    </style>
 <pre>
 <?php
 
@@ -36,7 +27,7 @@ if(!isset($_SESSION['tl']))
 
 var_dump($tl);
 
-echo $tl->getHTMLTable();
+
 ?>
 </pre>
 </body>

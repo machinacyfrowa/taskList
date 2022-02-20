@@ -82,7 +82,7 @@ class TaskList
             }
             $buffer .= "</td>";
             $buffer .= "<td>";
-            $buffer .= '<a href="ticket.php?code='
+            $buffer .= '<a href="task.php?code='
                             .$taskArray['code']
                             .'">';
             $buffer .= $taskArray['title'];
