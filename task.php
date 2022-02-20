@@ -21,6 +21,7 @@ session_start();
             if($_REQUEST['action'] == "close") 
             {
                 $_SESSION['tl']->closeByCode($_REQUEST['code']);
+                $tl->syncToDB();
                 header('Location: tasklist.php');
             }
                 

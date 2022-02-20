@@ -8,6 +8,7 @@ if(!isset($_SESSION['tl']))
     $_SESSION['tl'] = $tl;
 } else {
     $tl = $_SESSION['tl'];
+    $tl->syncFromDB();
 }
 ?>
 <!DOCTYPE html>

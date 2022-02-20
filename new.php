@@ -23,6 +23,7 @@ session_start();
         $tl = $_SESSION['tl'];
         $t = new Task($_REQUEST['title'],$_REQUEST['content'], $_REQUEST['priority']);
         $tl->addTask($t);
+        $tl->syncToDB();
         header('Location: tasklist.php');
     }
     ?>

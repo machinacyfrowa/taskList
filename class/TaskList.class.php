@@ -9,6 +9,68 @@ class TaskList
         $this->taskList = array();
     }
 
+    function syncToDB() {
+        $db = new mysqli('localhost', 'root','','taskList');
+        foreach ($this->taskList as $task) {
+            $taskArray = $task->getAsArray();
+            $code = $taskArray['code'];
+            $q = $db->prepare("SELECT * FROM task WHERE code = ?");
+            $q->bind_param('s', $code);
+            $q->execute();
+            $result = $q->get_result();
+            if($result->num_rows > 0) 
+            {
+                //zadanie juz istnieje w bazie danych - zaktualizuj
+                $q = $db->prepare("UPDATE task 
+                                    SET created = ?, resolved = ?,
+                                        title = ?, content = ?,
+                                        priority = ?
+                                    WHERE code = ?");
+                $createdTimestamp = date('Y-m-d H:i:s',$taskArray['createdTimestamp']);
+                $resolvedTimestamp = date('Y-m-d H:i:s',$taskArray['resolvedTimestamp']);
+                $q->bind_param('ssssis', 
+                                    $createdTimestamp,
+                                    $resolvedTimestamp,
+                                    $taskArray['title'],
+                                    $taskArray['content'],
+                                    $taskArray['priority'],
+                                    $taskArray['code']
+                );
+
+                $q->execute();
+            } else {
+                //zadania nie ma w bazie danych - dodaj
+                $q = $db->prepare("INSERT INTO task 
+                    (code, created, resolved, title, content, priority)
+                    VALUES (?, ?, ?, ?, ?,?)");
+                $q->bind_param('sssssi', $taskArray['code'],
+                date('Y-m-d H:i:s',$taskArray['createdTimestamp']),
+                date('Y-m-d H:i:s',$taskArray['resolvedTimestamp']),
+                                    $taskArray['title'],
+                                    $taskArray['content'],
+                                    $taskArray['priority']
+                                    
+                );
+                $q->execute();
+            }
+        }
+        
+
+    }
+    function syncFromDB() {
+        $db = new mysqli('localhost', 'root','','taskList');
+        $q = $db->prepare("SELECT * FROM task");
+        $q->execute();
+        $result = $q->get_result();
+        $this->taskList = array();
+        while($row = $result->fetch_assoc()) {
+            $t = new Task($row['title'], $row['content'], $row['priority']);
+            $t->assignCode($row['code']);
+            $t->setTimestamps(strtotime($row['created']), strtotime($row['resolved']));
+            array_push($this->taskList, $t);
+        }
+    }
+
     function addTask(Task $task)
     {
         $task->assignCode($this->generateNewCode());

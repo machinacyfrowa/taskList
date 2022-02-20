@@ -23,10 +23,10 @@ if(!isset($_SESSION['tl']))
 } else {
     $tl = $_SESSION['tl'];
 }
-
+$tl->syncFromDB();
 
 var_dump($tl);
-
+$tl->syncToDB();
 
 ?>
 </pre>

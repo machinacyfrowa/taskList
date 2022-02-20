@@ -20,6 +20,7 @@ class Task
             $this->priority = $priority;
     }
 
+
     function getAsArray()
     {
         $result = array(); //stwórz pustą tabelę
@@ -45,5 +46,12 @@ class Task
     function close(string $code) {
         if($this->code == $code)
             $this->resolvedTimestamp = time();
+    }
+
+    function setTimestamps(int $created, int $resolved) {
+        $this->createdTimestamp = $created;
+        $this->resolvedTimestamp = $resolved;
+        if($this->resolvedTimestamp < 0) 
+            $this->resolvedTimestamp = 0;
     }
 }
