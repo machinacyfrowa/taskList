@@ -1,6 +1,7 @@
 <?php
 class Task
 {
+    private $code; //unikatowy kod sprawy
     private $createdTimestamp; //data i czas utworzenia
     private $resolvedTimestamp; //data i czas zamknięcia
     private $title; //tytuł (nazwa) zadania
@@ -24,6 +25,7 @@ class Task
         $result = array(); //stwórz pustą tabelę
         //zapisz kolejno właściwości zadania do tej tabeli pod indeksami
         //(kluczami) zgodnymi z ich nazwą
+        $result['code'] = $this->code;
         $result['createdTimestamp'] = $this->createdTimestamp;
         $result['created'] = date('d M Y H:i:s', $this->createdTimestamp);
         $result['resolvedTimestamp'] = $this->resolvedTimestamp;
@@ -33,5 +35,10 @@ class Task
         $result['priority'] = $this->priority;
         //zwróć tablicę
         return $result;
+    }
+
+    function assignCode(string $code) 
+    {
+        $this->code = $code;
     }
 }
