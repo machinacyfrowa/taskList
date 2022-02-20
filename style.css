@@ -5,3 +5,13 @@ td {
     border: 1px solid black;
     padding: 5px;
 }
+div#newTaskForm {
+    width: 30vh;
+    margin: 0 auto;
+    
+}
+div#newTaskForm > form > * {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
