@@ -28,14 +28,49 @@ class TaskList
     {
         $buffer = "";
         $buffer .= "<table>";
+        $buffer .= "<tr>";
+        $buffer .= "<td>Data zgłoszenia</td>
+                    <td>Priorytet</td>
+                    <td>Temat zgłoszenia</td>
+                    <td>Status</td>";
+        $buffer .= "</tr>";
         foreach ($this->taskList as $task) {
             $buffer .= "<tr>";
             $taskArray = $task->getAsArray();
+            /* legacy code
             foreach ($taskArray as $key => $value) {
                 $buffer .= "<td>";
                 $buffer .= $value;
                 $buffer .= "</td>";
+            } */
+            $buffer .= "<td>";
+            $buffer .= $taskArray['created'];
+            $buffer .= "</td>";
+            $buffer .= "<td>";
+            switch ($taskArray['priority']) {
+                case 1:
+                    $buffer .= "Niski";
+                    break;
+                case 2:
+                    $buffer .= "Średni";
+                    break;
+                case 3:
+                    $buffer .= "Wysoki";
+                    break;
             }
+            $buffer .= "</td>";
+            $buffer .= "<td>";
+            $buffer .= $taskArray['title'];
+            $buffer .= "</td>";
+            $buffer .= "<td>";
+            if ($taskArray['resolvedTimestamp'] == 0) {
+                //sprawa nierozwiązana
+                $buffer .= "w toku";
+            } else {
+                //sprawa rozwiązana
+                $buffer .= $taskArray['resolved'];
+            }
+            $buffer .= "</td>";
             $buffer .= "</tr>";
         }
 
