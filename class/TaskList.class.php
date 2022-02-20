@@ -82,7 +82,11 @@ class TaskList
             }
             $buffer .= "</td>";
             $buffer .= "<td>";
+            $buffer .= '<a href="ticket.php?code='
+                            .$taskArray['code']
+                            .'">';
             $buffer .= $taskArray['title'];
+            $buffer .= '</a>';
             $buffer .= "</td>";
             $buffer .= "<td>";
             if ($taskArray['resolvedTimestamp'] == 0) {
@@ -98,5 +102,18 @@ class TaskList
 
         $buffer .= "</table>";
         return $buffer;
+    }
+    function getByCode(string $code) {
+        //przejdz przez wszystkie zapisane zadania
+        foreach ($this->taskList as $task) {
+            //pobierz pojedyńczo całe zadanie jako tablice
+            $taskArray = $task->getAsArray();
+            //sprawdz czy kod zadania jest zgodny  z poszukiwanym
+            if($taskArray['code'] == $code)
+                // jesli kod jest zgodny zwroc tablice z zadaniem
+                return $taskArray;
+        }
+        //jeśli doszliśmy tu to nie znaleziono zgodnego kodu - zwróć pusty
+        return NULL;
     }
 }

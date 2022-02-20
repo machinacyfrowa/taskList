@@ -1,3 +1,8 @@
+<?php
+require "class/TaskList.class.php";
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -18,12 +23,18 @@
     </style>
 <pre>
 <?php
-require "class/TaskList.class.php";
 
-$tl = new TaskList();
-$tl->loadTestData();
+if(!isset($_SESSION['tl']))
+{
+    $tl = new TaskList();
+    $tl->loadTestData();
+    $_SESSION['tl'] = $tl;
+} else {
+    $tl = $_SESSION['tl'];
+}
 
-//var_dump($tl);
+
+var_dump($tl);
 
 echo $tl->getHTMLTable();
 ?>
